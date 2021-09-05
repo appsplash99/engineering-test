@@ -4,6 +4,11 @@ import { IAppCxt, InitialState } from "./staffAppContext.type"
 
 const initialState: InitialState = {
   isRollMode: false,
+  sort: {
+    applied: false,
+    firstName: true,
+    ascending: false,
+  },
 }
 
 const staffAppContext = createContext<IAppCxt>({
