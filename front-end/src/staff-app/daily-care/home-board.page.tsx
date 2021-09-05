@@ -8,7 +8,7 @@ import { useApi } from "shared/hooks/use-api"
 import { StudentListTile } from "staff-app/components/student-list-tile/student-list-tile.component"
 import { ActiveRollOverlay, ActiveRollAction } from "staff-app/components/active-roll-overlay/active-roll-overlay.component"
 import { useStaffAppState } from "staff-app/context/staffAppContext"
-import { Toolbar, ToolbarAction } from "staff-app/components/toolbar/toolbar.component"
+import { Toolbar } from "staff-app/components/toolbar/toolbar.component"
 
 export const HomeBoardPage: React.FC = () => {
   const {
@@ -23,13 +23,6 @@ export const HomeBoardPage: React.FC = () => {
     void getStudents()
   }, [getStudents])
 
-  const onToolbarAction = (action: ToolbarAction) => {
-    if (action === "roll") {
-      // setIsRollMode(true)
-      dispatch({ type: "CHANGE_ROLL_MODE", payload: true })
-    }
-  }
-
   const onActiveRollAction = (action: ActiveRollAction) => {
     if (action === "exit") {
       // setIsRollMode(false)
@@ -40,7 +33,7 @@ export const HomeBoardPage: React.FC = () => {
   return (
     <>
       <S.PageContainer>
-        <Toolbar onItemClick={onToolbarAction} />
+        <Toolbar />
 
         {loadState === "loading" && (
           <CenteredContainer>
