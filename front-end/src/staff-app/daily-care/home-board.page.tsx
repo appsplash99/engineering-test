@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React, { useEffect } from "react"
 import styled from "styled-components"
 import Button from "@material-ui/core/ButtonBase"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
@@ -9,9 +9,15 @@ import { Person } from "shared/models/person"
 import { useApi } from "shared/hooks/use-api"
 import { StudentListTile } from "staff-app/components/student-list-tile/student-list-tile.component"
 import { ActiveRollOverlay, ActiveRollAction } from "staff-app/components/active-roll-overlay/active-roll-overlay.component"
+import { useStaffAppState } from "staff-app/context/staffAppContext"
 
 export const HomeBoardPage: React.FC = () => {
-  const [isRollMode, setIsRollMode] = useState(false)
+  const {
+    state: { isRollMode },
+    dispatch,
+  } = useStaffAppState()
+  // TODO: remove commemnts at Last
+  // const [isRollMode, setIsRollMode] = useState(false)
   const [getStudents, data, loadState] = useApi<{ students: Person[] }>({ url: "get-homeboard-students" })
 
   useEffect(() => {
@@ -20,13 +26,15 @@ export const HomeBoardPage: React.FC = () => {
 
   const onToolbarAction = (action: ToolbarAction) => {
     if (action === "roll") {
-      setIsRollMode(true)
+      // setIsRollMode(true)
+      dispatch({ type: "CHANGE_ROLL_MODE", payload: true })
     }
   }
 
   const onActiveRollAction = (action: ActiveRollAction) => {
     if (action === "exit") {
-      setIsRollMode(false)
+      // setIsRollMode(false)
+      dispatch({ type: "CHANGE_ROLL_MODE", payload: false })
     }
   }
 
