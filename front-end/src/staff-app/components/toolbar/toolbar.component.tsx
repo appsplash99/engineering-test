@@ -4,26 +4,21 @@ import Button from "@material-ui/core/ButtonBase"
 import { Spacing, BorderRadius, FontWeight } from "shared/styles/styles"
 import { Colors } from "shared/styles/colors"
 import { Sort } from "../sort/sort"
+import { useStaffAppState } from "staff-app/context/staffAppContext"
 
-export type ToolbarAction = "roll" | "sort"
+export const Toolbar: React.FC = () => {
+  const { dispatch } = useStaffAppState()
 
-interface ToolbarProps {
-  onItemClick: (action: ToolbarAction, value?: string) => void
-}
-export const Toolbar: React.FC<ToolbarProps> = (props) => {
-  const { onItemClick } = props
   return (
     <S.ToolbarContainer>
       {/* SORT */}
-      {/* TODO: REMOVE BELOW LINE */}
-      <div onClick={() => onItemClick("sort")}>First Name</div>
       <Sort />
 
       {/* SEARCH */}
       <div>Search</div>
 
       {/* START ROLL BUTTON */}
-      <S.Button onClick={() => onItemClick("roll")}>Start Roll</S.Button>
+      <S.Button onClick={() => dispatch({ type: "CHANGE_ROLL_MODE", payload: true })}>Start Roll</S.Button>
     </S.ToolbarContainer>
   )
 }
