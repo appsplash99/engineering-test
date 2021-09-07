@@ -9,7 +9,7 @@ interface StateList {
 }
 
 export interface UpdatedStudent extends Person {
-  type: RolllStateType | "all"
+  type: RolllStateType
 }
 
 export interface InitialState {
@@ -22,6 +22,7 @@ export interface InitialState {
   searchString: string
   rollStateList: StateList[]
   updatedStudentRolls: UpdatedStudent[]
+  filterType: RolllStateType | "all"
 }
 
 export interface IAppCxt {
