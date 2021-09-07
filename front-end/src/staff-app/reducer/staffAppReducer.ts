@@ -1,5 +1,6 @@
 import { InitialState } from "../context/staffAppContext.type"
 import { IActionType } from "./staffAppActions"
+import { isStudentInUpdatedStudentRolls } from "staff-app/utils"
 
 export const staffAppReducer = (prevState: InitialState, action: IActionType) => {
   switch (action.type) {
@@ -33,10 +34,25 @@ export const staffAppReducer = (prevState: InitialState, action: IActionType) =>
     case "RESET_SEARCH_STRING":
       return { ...prevState, searchString: "" }
 
+    /** TODO: MIGHT NEED TO REMOVE BELOW REDUCER CASE */
     case "SET_ALL_STUDENTS_COUNT":
       return {
         ...prevState,
         rollStateList: prevState.rollStateList.map((stateObj) => (stateObj.type === "all" ? { ...stateObj, count: action.payload } : stateObj)),
+      }
+    /** TODO: MIGHT NEED TO REMOVE ABOVE REDUCER CASE */
+
+    case "ADD_OR_UPDATE_STUDENT_INTO_UPDATED_STUDENT_ROLLS":
+      const newStudent = action.payload
+      console.log({ newStudent })
+      const existingStudentRolls = prevState.updatedStudentRolls
+
+      const latestChanges = isStudentInUpdatedStudentRolls(existingStudentRolls, newStudent)
+        ? existingStudentRolls.map((studentObj, i) => (studentObj.id === newStudent.id ? { ...newStudent } : { ...studentObj }))
+        : existingStudentRolls.concat(action.payload)
+      return {
+        ...prevState,
+        updatedStudentRolls: latestChanges,
       }
 
     default:
