@@ -15,12 +15,10 @@ export const getSortedStudents = (studentsData: Person[], appState: InitialState
 
     sortedStudents = studentsData.sort((a, b) => {
       if (sortState.ascending) {
-        // console.log("CHECKED ASCENDING")
         /**EITHER SORT BY ASCENDING */
         nameOne = a[key]
         nameTwo = b[key]
       } else {
-        // console.log("CHECKED DESCENDING")
         /**OR SORT BY DESCENDING */
         nameOne = b[key]
         nameTwo = a[key]
