@@ -9,11 +9,10 @@ import { StudentListTile } from "staff-app/components/student-list-tile/student-
 import { ActiveRollOverlay, ActiveRollAction } from "staff-app/components/active-roll-overlay/active-roll-overlay.component"
 import { useStaffAppState } from "staff-app/context/staffAppContext"
 import { Toolbar } from "staff-app/components/toolbar/toolbar.component"
-import { getSortedStudents } from "staff-app/utils/sort-function"
+import { getSortedStudents, getSearchedStudents } from "staff-app/utils"
 
 export const HomeBoardPage: React.FC = () => {
   const { state, dispatch } = useStaffAppState()
-  // TODO: remove commemnts at Last
   // const [isRollMode, setIsRollMode] = useState(false)
   const [getStudents, data, loadState] = useApi<{ students: Person[] }>({ url: "get-homeboard-students" })
 
@@ -22,6 +21,7 @@ export const HomeBoardPage: React.FC = () => {
   }, [getStudents])
 
   const sortedStudents = data && getSortedStudents(data.students, state)
+  const searchedStudents = sortedStudents && getSearchedStudents(sortedStudents, state.searchString)
 
   const onActiveRollAction = (action: ActiveRollAction) => {
     if (action === "exit") {
@@ -30,7 +30,6 @@ export const HomeBoardPage: React.FC = () => {
     }
   }
 
-  console.log("BEFORE RETURN")
   return (
     <>
       <S.PageContainer>
@@ -42,7 +41,7 @@ export const HomeBoardPage: React.FC = () => {
         )}
         {loadState === "loaded" && data?.students && (
           <>
-            {sortedStudents?.map((s) => (
+            {searchedStudents?.map((s) => (
               <StudentListTile key={s.id} isRollMode={state.isRollMode} student={s} />
             ))}
           </>
