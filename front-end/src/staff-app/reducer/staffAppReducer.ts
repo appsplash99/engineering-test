@@ -33,6 +33,12 @@ export const staffAppReducer = (prevState: InitialState, action: IActionType) =>
     case "RESET_SEARCH_STRING":
       return { ...prevState, searchString: "" }
 
+    case "SET_ALL_STUDENTS_COUNT":
+      return {
+        ...prevState,
+        rollStateList: prevState.rollStateList.map((stateObj) => (stateObj.type === "all" ? { ...stateObj, count: action.payload } : stateObj)),
+      }
+
     default:
       console.log("THIS ACTION IS NOT PRESENT IN STAFF-APP-REDUCER")
       return prevState
