@@ -24,6 +24,15 @@ export const staffAppReducer = (prevState: InitialState, action: IActionType) =>
         sort: { ...prevState.sort, ascending: !prevState.sort.ascending },
       }
 
+    case "CHANGE_SEARCH_STRING":
+      return {
+        ...prevState,
+        searchString: action.payload,
+      }
+
+    case "RESET_SEARCH_STRING":
+      return { ...prevState, searchString: "" }
+
     default:
       console.log("THIS ACTION IS NOT PRESENT IN STAFF-APP-REDUCER")
       return prevState
