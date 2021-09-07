@@ -34,14 +34,6 @@ export const staffAppReducer = (prevState: InitialState, action: IActionType) =>
     case "RESET_SEARCH_STRING":
       return { ...prevState, searchString: "" }
 
-    /** TODO: MIGHT NEED TO REMOVE BELOW REDUCER CASE */
-    case "SET_ALL_STUDENTS_COUNT":
-      return {
-        ...prevState,
-        rollStateList: prevState.rollStateList.map((stateObj) => (stateObj.type === "all" ? { ...stateObj, count: action.payload } : stateObj)),
-      }
-    /** TODO: MIGHT NEED TO REMOVE ABOVE REDUCER CASE */
-
     case "ADD_OR_UPDATE_STUDENT_INTO_UPDATED_STUDENT_ROLLS":
       const newStudent = action.payload
       console.log({ newStudent })
@@ -53,6 +45,18 @@ export const staffAppReducer = (prevState: InitialState, action: IActionType) =>
       return {
         ...prevState,
         updatedStudentRolls: latestChanges,
+      }
+
+    case "ADD_ALL_STUDENTS_WITH_ROLL_TYPE_AS_UNMARK_INTO_UPDATED_STUDENT_ROLLS":
+      return {
+        ...prevState,
+        updatedStudentRolls: prevState.updatedStudentRolls.concat(action.payload.map((stuObj) => ({ ...stuObj, type: "unmark" }))),
+      }
+
+    case "FILTER_STUDENTS_BY_ROLL_TYPE":
+      return {
+        ...prevState,
+        filterType: action.payload,
       }
 
     default:
