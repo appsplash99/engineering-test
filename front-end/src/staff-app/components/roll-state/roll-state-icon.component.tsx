@@ -6,14 +6,24 @@ import { Colors } from "shared/styles/colors"
 import { RolllStateType } from "shared/models/roll"
 
 interface Props {
-  type: RolllStateType
+  type?: RolllStateType
   size?: number
   onClick?: () => void
 }
 export const RollStateIcon: React.FC<Props> = (props) => {
-  const { type, size = 20, onClick } = props
+  const { type = "unmark", size = 20, onClick } = props
   return (
-    <S.Icon size={size} border={type === "unmark"} bgColor={getBgColor(type)} clickable={Boolean(onClick)} onClick={onClick}>
+    <S.Icon
+      size={size}
+      border={type === "unmark"}
+      bgColor={getBgColor(type)}
+      clickable={Boolean(onClick)}
+      onClick={() => {
+        /** BELOW FUNCTION IS ON CLICK FOR EACH ROLL STATE ICON */
+        onClick && onClick()
+        // console.log({ type: type })
+      }}
+    >
       <FontAwesomeIcon icon="check" size={size > 14 ? "lg" : "sm"} />
     </S.Icon>
   )
