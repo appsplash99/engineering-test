@@ -16,7 +16,12 @@ export const Sort: React.FC = () => {
 
   return (
     <S.SortContainer>
-      <FormControlLabel control={<Switch checked={applied} onChange={() => dispatch({ type: "TOGGLE_SORT" })} name="firstName" />} label="Sort Users" labelPlacement="start" />
+      <FormControlLabel
+        style={{ marginLeft: 0 }}
+        control={<Switch checked={applied} onChange={() => dispatch({ type: "TOGGLE_SORT" })} name="firstName" />}
+        label="Sort Users"
+        labelPlacement="start"
+      />
       {applied && (
         <FormGroup row>
           <FormControlLabel
@@ -41,7 +46,7 @@ const S = {
     align-items: flex-start;
     justify-content: center;
     font-size: ${FontSize.u2};
-    padding: ${Spacing.u2} ${Spacing.u5} ${Spacing.u2} ${Spacing.u2};
+    padding: 0 ${Spacing.u5} 0 ${Spacing.u2};
     gap: ${Spacing.u1};
   `,
 }
