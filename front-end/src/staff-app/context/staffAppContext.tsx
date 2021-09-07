@@ -10,6 +10,12 @@ const initialState: InitialState = {
     ascending: false,
   },
   searchString: "",
+  rollStateList: [
+    { type: "all", count: 0 },
+    { type: "present", count: 0 },
+    { type: "late", count: 0 },
+    { type: "absent", count: 0 },
+  ],
 }
 
 const staffAppContext = createContext<IAppCxt>({
