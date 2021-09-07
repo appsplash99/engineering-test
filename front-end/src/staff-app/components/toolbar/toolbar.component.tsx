@@ -9,13 +9,13 @@ import { useStaffAppState } from "staff-app/context/staffAppContext"
 
 export const Toolbar: React.FC = () => {
   const { dispatch } = useStaffAppState()
+  const handleStartRollMode = () => dispatch({ type: "CHANGE_ROLL_MODE", payload: true })
 
   return (
     <S.ToolbarContainer>
       <Sort />
       <Search />
-      {/* START ROLL BUTTON */}
-      <S.Button onClick={() => dispatch({ type: "CHANGE_ROLL_MODE", payload: true })}>Start Roll</S.Button>
+      <S.Button onClick={handleStartRollMode}>Start Roll</S.Button>
     </S.ToolbarContainer>
   )
 }
