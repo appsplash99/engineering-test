@@ -18,13 +18,13 @@ export const Search = () => {
   const handleResetSearch = () => dispatch({ type: "RESET_SEARCH_STRING" })
 
   return (
-    <div>
+    <div style={{ margin: "0.25rem auto" }}>
       <Grid container spacing={1} alignItems="center">
         <Grid item>
           <TextField
             multiline
             rowsMax={1}
-            size="small"
+            size="medium"
             type="search"
             value={value}
             label="Search User"
