@@ -31,6 +31,7 @@ const S = {
     padding: 6px 14px;
     font-weight: ${FontWeight.strong};
     border-radius: ${BorderRadius.default};
+    gap: ${Spacing.u2};
   `,
   Button: styled(Button)`
     && {
