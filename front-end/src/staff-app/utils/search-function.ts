@@ -1,6 +1,7 @@
-import { Person, PersonHelper } from "shared/models/person"
+import { PersonHelper } from "shared/models/person"
+import { UpdatedStudent } from "staff-app/context/staffAppContext.type"
 
-export const getSearchedStudents = (allStudents: Person[], searchString: string) => {
+export const getSearchedStudents = (allStudents: UpdatedStudent[], searchString: string) => {
   if (searchString === "") {
     return allStudents
   }

@@ -1,10 +1,9 @@
-import { Person } from "shared/models/person"
-import { InitialState } from "../context/staffAppContext.type"
+import { InitialState, UpdatedStudent } from "../context/staffAppContext.type"
 
-export const getSortedStudents = (studentsData: Person[], appState: InitialState) => {
+export const getSortedStudents = (studentsData: UpdatedStudent[], appState: InitialState) => {
   const { sort: sortState } = appState
 
-  let sortedStudents: Person[]
+  let sortedStudents: UpdatedStudent[]
   let key: "first_name" | "last_name"
   let nameOne
   let nameTwo
