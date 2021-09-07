@@ -1,19 +1,16 @@
 import React, { useEffect } from "react"
 import styled from "styled-components"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { Spacing } from "shared/styles/styles"
-import { CenteredContainer } from "shared/components/centered-container/centered-container.component"
 import { Person } from "shared/models/person"
 import { useApi } from "shared/hooks/use-api"
-import { StudentListTile } from "staff-app/components/student-list-tile/student-list-tile.component"
-import { ActiveRollOverlay, ActiveRollAction } from "staff-app/components/active-roll-overlay/active-roll-overlay.component"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { useStaffAppState } from "staff-app/context/staffAppContext"
-import { Toolbar } from "staff-app/components/toolbar/toolbar.component"
 import { getSortedStudents, getSearchedStudents } from "staff-app/utils"
+import { Toolbar, StudentListTile, ActiveRollOverlay } from "staff-app/components"
+import { CenteredContainer } from "shared/components/centered-container/centered-container.component"
 
 export const HomeBoardPage: React.FC = () => {
-  const { state, dispatch } = useStaffAppState()
-  // const [isRollMode, setIsRollMode] = useState(false)
+  const { state } = useStaffAppState()
   const [getStudents, data, loadState] = useApi<{ students: Person[] }>({ url: "get-homeboard-students" })
 
   useEffect(() => {
@@ -22,13 +19,6 @@ export const HomeBoardPage: React.FC = () => {
 
   const sortedStudents = data && getSortedStudents(data.students, state)
   const searchedStudents = sortedStudents && getSearchedStudents(sortedStudents, state.searchString)
-
-  const onActiveRollAction = (action: ActiveRollAction) => {
-    if (action === "exit") {
-      // setIsRollMode(false)
-      dispatch({ type: "CHANGE_ROLL_MODE", payload: false })
-    }
-  }
 
   return (
     <>
@@ -52,7 +42,7 @@ export const HomeBoardPage: React.FC = () => {
           </CenteredContainer>
         )}
       </S.PageContainer>
-      <ActiveRollOverlay isActive={state.isRollMode} onItemClick={onActiveRollAction} />
+      <ActiveRollOverlay />
     </>
   )
 }
