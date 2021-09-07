@@ -6,9 +6,10 @@ const initialState: InitialState = {
   isRollMode: false,
   sort: {
     applied: false,
-    firstName: true,
+    firstName: false,
     ascending: false,
   },
+  searchString: "",
 }
 
 const staffAppContext = createContext<IAppCxt>({

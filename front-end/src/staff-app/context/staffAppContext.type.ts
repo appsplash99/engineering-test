@@ -5,6 +5,7 @@ export interface InitialState {
     firstName: boolean
     ascending: boolean
   }
+  searchString: string
 }
 
 export interface IAppCxt {
