@@ -10,13 +10,7 @@ const initialState: InitialState = {
     ascending: false,
   },
   searchString: "",
-  rollStateList: [
-    { type: "all", count: 0 },
-    { type: "present", count: 0 },
-    { type: "late", count: 0 },
-    { type: "absent", count: 0 },
-  ],
-  // allStudentsCount: 0,
+  rollStateList: [{ type: "all" }, { type: "present" }, { type: "late" }, { type: "absent" }],
   updatedStudentRolls: [],
   filterType: "all",
 }

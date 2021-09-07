@@ -5,7 +5,6 @@ export type ItemType = RolllStateType | "all"
 
 interface StateList {
   type: ItemType
-  count: number
 }
 
 export interface UpdatedStudent extends Person {
