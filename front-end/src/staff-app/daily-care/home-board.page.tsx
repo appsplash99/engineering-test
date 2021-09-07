@@ -9,12 +9,10 @@ import { StudentListTile } from "staff-app/components/student-list-tile/student-
 import { ActiveRollOverlay, ActiveRollAction } from "staff-app/components/active-roll-overlay/active-roll-overlay.component"
 import { useStaffAppState } from "staff-app/context/staffAppContext"
 import { Toolbar } from "staff-app/components/toolbar/toolbar.component"
+import { getSortedStudents } from "staff-app/utils/sort-function"
 
 export const HomeBoardPage: React.FC = () => {
-  const {
-    state: { isRollMode },
-    dispatch,
-  } = useStaffAppState()
+  const { state, dispatch } = useStaffAppState()
   // TODO: remove commemnts at Last
   // const [isRollMode, setIsRollMode] = useState(false)
   const [getStudents, data, loadState] = useApi<{ students: Person[] }>({ url: "get-homeboard-students" })
@@ -23,6 +21,8 @@ export const HomeBoardPage: React.FC = () => {
     void getStudents()
   }, [getStudents])
 
+  const sortedStudents = data && getSortedStudents(data.students, state)
+
   const onActiveRollAction = (action: ActiveRollAction) => {
     if (action === "exit") {
       // setIsRollMode(false)
@@ -30,32 +30,30 @@ export const HomeBoardPage: React.FC = () => {
     }
   }
 
+  console.log("BEFORE RETURN")
   return (
     <>
       <S.PageContainer>
         <Toolbar />
-
         {loadState === "loading" && (
           <CenteredContainer>
             <FontAwesomeIcon icon="spinner" size="2x" spin />
           </CenteredContainer>
         )}
-
         {loadState === "loaded" && data?.students && (
           <>
-            {data.students.map((s) => (
-              <StudentListTile key={s.id} isRollMode={isRollMode} student={s} />
+            {sortedStudents?.map((s) => (
+              <StudentListTile key={s.id} isRollMode={state.isRollMode} student={s} />
             ))}
           </>
         )}
-
         {loadState === "error" && (
           <CenteredContainer>
             <div>Failed to load</div>
           </CenteredContainer>
         )}
       </S.PageContainer>
-      <ActiveRollOverlay isActive={isRollMode} onItemClick={onActiveRollAction} />
+      <ActiveRollOverlay isActive={state.isRollMode} onItemClick={onActiveRollAction} />
     </>
   )
 }
