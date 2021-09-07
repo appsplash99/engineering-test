@@ -1,15 +1,21 @@
-import React, { useState } from "react"
+import React from "react"
 import { Grid } from "@material-ui/core"
 import { Colors } from "shared/styles/colors"
 import Button from "@material-ui/core/Button"
 import TextField from "@material-ui/core/TextField"
+import { useStaffAppState } from "staff-app/context/staffAppContext"
 
 export const Search = () => {
-  const [value, setValue] = useState("")
+  const {
+    dispatch,
+    state: { searchString: value },
+  } = useStaffAppState()
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setValue((prev) => prev + e.target.value)
+    dispatch({ type: "CHANGE_SEARCH_STRING", payload: e.target.value })
   }
+
+  const handleResetSearch = () => dispatch({ type: "RESET_SEARCH_STRING" })
 
   return (
     <div>
@@ -21,7 +27,7 @@ export const Search = () => {
             size="small"
             type="search"
             value={value}
-            label="Search"
+            label="Search User"
             variant="filled"
             fullWidth={false}
             id="outlined-search"
@@ -32,13 +38,7 @@ export const Search = () => {
         </Grid>
         <Grid item>
           {value.length > 0 && (
-            <Button
-              variant="contained"
-              size="small"
-              onClick={() => {
-                setValue("")
-              }}
-            >
+            <Button size="small" variant="contained" onClick={handleResetSearch}>
               Clear
             </Button>
           )}
