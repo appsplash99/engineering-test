@@ -3,18 +3,16 @@ import styled from "styled-components"
 import Button from "@material-ui/core/Button"
 import { BorderRadius, Spacing } from "shared/styles/styles"
 import { RollStateList } from "staff-app/components/roll-state/roll-state-list.component"
+import { useStaffAppState } from "staff-app/context/staffAppContext"
 
-export type ActiveRollAction = "filter" | "exit"
-interface Props {
-  isActive: boolean
-  onItemClick: (action: ActiveRollAction, value?: string) => void
-}
-
-export const ActiveRollOverlay: React.FC<Props> = (props) => {
-  const { isActive, onItemClick } = props
+export const ActiveRollOverlay: React.FC = () => {
+  const {
+    state: { isRollMode },
+    dispatch,
+  } = useStaffAppState()
 
   return (
-    <S.Overlay isActive={isActive}>
+    <S.Overlay isActive={isRollMode}>
       <S.Content>
         <div>Class Attendance</div>
         <div>
@@ -27,10 +25,10 @@ export const ActiveRollOverlay: React.FC<Props> = (props) => {
             ]}
           />
           <div style={{ marginTop: Spacing.u6 }}>
-            <Button color="inherit" onClick={() => onItemClick("exit")}>
+            <Button color="inherit" onClick={() => dispatch({ type: "CHANGE_ROLL_MODE", payload: false })}>
               Exit
             </Button>
-            <Button color="inherit" style={{ marginLeft: Spacing.u2 }} onClick={() => onItemClick("exit")}>
+            <Button color="inherit" style={{ marginLeft: Spacing.u2 }} onClick={() => dispatch({ type: "CHANGE_ROLL_MODE", payload: false })}>
               Complete
             </Button>
           </div>
