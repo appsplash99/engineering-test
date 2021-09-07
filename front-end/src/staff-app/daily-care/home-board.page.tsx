@@ -10,12 +10,19 @@ import { Toolbar, StudentListTile, ActiveRollOverlay } from "staff-app/component
 import { CenteredContainer } from "shared/components/centered-container/centered-container.component"
 
 export const HomeBoardPage: React.FC = () => {
-  const { state } = useStaffAppState()
+  const { state, dispatch } = useStaffAppState()
   const [getStudents, data, loadState] = useApi<{ students: Person[] }>({ url: "get-homeboard-students" })
 
   useEffect(() => {
     void getStudents()
   }, [getStudents])
+
+  useEffect(() => {
+    if (loadState === "loaded") {
+      // console.log("DATA LOADED")
+      dispatch({ type: "SET_ALL_STUDENTS_COUNT", payload: data?.students.length })
+    }
+  }, [loadState, dispatch, data])
 
   const sortedStudents = data && getSortedStudents(data.students, state)
   const searchedStudents = sortedStudents && getSearchedStudents(sortedStudents, state.searchString)
@@ -32,7 +39,7 @@ export const HomeBoardPage: React.FC = () => {
         {loadState === "loaded" && data?.students && (
           <>
             {searchedStudents?.map((s) => (
-              <StudentListTile key={s.id} isRollMode={state.isRollMode} student={s} />
+              <StudentListTile key={s.id} student={s} />
             ))}
           </>
         )}
