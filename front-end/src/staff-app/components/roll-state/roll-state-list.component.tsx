@@ -3,36 +3,57 @@ import styled from "styled-components"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { RollStateIcon } from "staff-app/components/roll-state/roll-state-icon.component"
 import { Spacing, FontWeight } from "shared/styles/styles"
-import { RolllStateType } from "shared/models/roll"
+import { ItemType } from "staff-app/context/staffAppContext.type"
+import { useStaffAppState } from "staff-app/context/staffAppContext"
 
 interface Props {
-  stateList: StateList[]
   onItemClick?: (type: ItemType) => void
   size?: number
 }
-export const RollStateList: React.FC<Props> = ({ stateList, size = 14, onItemClick }) => {
-  const onClick = (type: ItemType) => {
-    if (onItemClick) {
-      onItemClick(type)
-    }
-  }
+export const RollStateList: React.FC<Props> = ({ size = 14, onItemClick }) => {
+  const {
+    state: { rollStateList, updatedStudentRolls },
+  } = useStaffAppState()
+
+  /** TODO: CONFIRM FOR TASK 3 */
+  // const onClick = (type: ItemType) => {
+  //   if (onItemClick) {
+  //     onItemClick(type)
+  //   }
+  // }
 
   return (
     <S.ListContainer>
-      {stateList.map((s, i) => {
+      {rollStateList.map((s, i) => {
         if (s.type === "all") {
           return (
             <S.ListItem key={i}>
-              <FontAwesomeIcon icon="users" size="sm" style={{ cursor: "pointer" }} onClick={() => onClick(s.type)} />
-              <span>{s.count}</span>
+              <FontAwesomeIcon
+                icon="users"
+                size="sm"
+                style={{ cursor: "pointer" }}
+                onClick={() => {
+                  // onClick(s.type)
+                  console.log(`FROM ROLL STATE LIST COMPONENT with type ${s.type}`)
+                }}
+              />
+              {/* TODO: NEED TO REMOVE/rollStateList from below and context  */}
+              <span>{rollStateList.find((stateObj) => stateObj.type === "all")?.count}</span>
             </S.ListItem>
           )
         }
 
         return (
           <S.ListItem key={i}>
-            <RollStateIcon type={s.type} size={size} onClick={() => onClick(s.type)} />
-            <span>{s.count}</span>
+            <RollStateIcon
+              type={s.type}
+              size={size}
+              onClick={() => {
+                // onClick(s.type)
+                console.log(`FROM ROLL STATE LIST COMPONENT with type ${s.type}`)
+              }}
+            />
+            <span>{updatedStudentRolls.filter((stateObj) => stateObj.type === s.type)?.length}</span>
           </S.ListItem>
         )
       })}
@@ -56,10 +77,3 @@ const S = {
     }
   `,
 }
-
-interface StateList {
-  type: ItemType
-  count: number
-}
-
-type ItemType = RolllStateType | "all"
