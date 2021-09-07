@@ -5,7 +5,7 @@ import { Person } from "shared/models/person"
 import { useApi } from "shared/hooks/use-api"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { useStaffAppState } from "staff-app/context/staffAppContext"
-import { getSortedStudents, getSearchedStudents } from "staff-app/utils"
+import { getSortedStudents, getSearchedStudents, getFilteredStudents } from "staff-app/utils"
 import { Toolbar, StudentListTile, ActiveRollOverlay } from "staff-app/components"
 import { CenteredContainer } from "shared/components/centered-container/centered-container.component"
 
@@ -18,14 +18,12 @@ export const HomeBoardPage: React.FC = () => {
   }, [getStudents])
 
   useEffect(() => {
-    if (loadState === "loaded") {
-      // console.log("DATA LOADED")
-      dispatch({ type: "SET_ALL_STUDENTS_COUNT", payload: data?.students.length })
-    }
+    loadState === "loaded" && dispatch({ type: "ADD_ALL_STUDENTS_WITH_ROLL_TYPE_AS_UNMARK_INTO_UPDATED_STUDENT_ROLLS", payload: data?.students })
   }, [loadState, dispatch, data])
 
-  const sortedStudents = data && getSortedStudents(data.students, state)
+  const sortedStudents = data && getSortedStudents(state.updatedStudentRolls, state)
   const searchedStudents = sortedStudents && getSearchedStudents(sortedStudents, state.searchString)
+  const filteredStudents = searchedStudents && getFilteredStudents(searchedStudents, state)
 
   return (
     <>
@@ -38,7 +36,7 @@ export const HomeBoardPage: React.FC = () => {
         )}
         {loadState === "loaded" && data?.students && (
           <>
-            {searchedStudents?.map((s) => (
+            {filteredStudents?.map((s) => (
               <StudentListTile key={s.id} student={s} />
             ))}
           </>
