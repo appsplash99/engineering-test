@@ -16,6 +16,7 @@ const initialState: InitialState = {
     { type: "late", count: 0 },
     { type: "absent", count: 0 },
   ],
+  updatedStudentRolls: [],
 }
 
 const staffAppContext = createContext<IAppCxt>({
