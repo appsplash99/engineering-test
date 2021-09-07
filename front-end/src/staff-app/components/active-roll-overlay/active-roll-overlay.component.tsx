@@ -18,10 +18,23 @@ export const ActiveRollOverlay: React.FC = () => {
         <div>
           <RollStateList />
           <div style={{ marginTop: Spacing.u6 }}>
-            <Button color="inherit" onClick={() => dispatch({ type: "CHANGE_ROLL_MODE", payload: false })}>
+            <Button
+              color="inherit"
+              onClick={() => {
+                dispatch({ type: "CHANGE_ROLL_MODE", payload: false })
+                dispatch({ type: "FILTER_STUDENTS_BY_ROLL_TYPE", payload: "all" })
+              }}
+            >
               Exit
             </Button>
-            <Button color="inherit" style={{ marginLeft: Spacing.u2 }} onClick={() => dispatch({ type: "CHANGE_ROLL_MODE", payload: false })}>
+            <Button
+              color="inherit"
+              style={{ marginLeft: Spacing.u2 }}
+              onClick={() => {
+                dispatch({ type: "CHANGE_ROLL_MODE", payload: false })
+                dispatch({ type: "FILTER_STUDENTS_BY_ROLL_TYPE", payload: "all" })
+              }}
+            >
               Complete
             </Button>
           </div>
