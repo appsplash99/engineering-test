@@ -37,8 +37,8 @@ export const ActivityPage: React.FC = () => {
       {!loading && error && <>Unable to receive Data</>}
       {!loading && !error && (
         <>
-          {activitiesData.map((item) => (
-            <S.Card>
+          {activitiesData.map((item, i) => (
+            <S.Card key={i}>
               <div>Type: {item.type}</div>
               <S.SubSection>
                 <div>id: {item.entity.id}</div>
