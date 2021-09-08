@@ -22,7 +22,6 @@ export const ActivityPage: React.FC = () => {
       const resp = await getActivities()
       resp.success && setActivitiesData(resp.activity)
       !resp.success && setError(true)
-      console.log(JSON.stringify(resp, null, 4))
       setLoading(false)
     }
     fetchActivities()

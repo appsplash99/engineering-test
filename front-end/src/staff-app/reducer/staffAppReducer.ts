@@ -36,7 +36,6 @@ export const staffAppReducer = (prevState: InitialState, action: IActionType) =>
 
     case "ADD_OR_UPDATE_STUDENT_INTO_UPDATED_STUDENT_ROLLS":
       const newStudent = action.payload
-      console.log({ newStudent })
       const existingStudentRolls = prevState.updatedStudentRolls
 
       const latestChanges = isStudentInUpdatedStudentRolls(existingStudentRolls, newStudent)

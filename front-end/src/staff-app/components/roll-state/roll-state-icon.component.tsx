@@ -21,7 +21,6 @@ export const RollStateIcon: React.FC<Props> = (props) => {
       onClick={() => {
         /** BELOW FUNCTION IS ON CLICK FOR EACH ROLL STATE ICON */
         onClick && onClick()
-        // console.log({ type: type })
       }}
     >
       <FontAwesomeIcon icon="check" size={size > 14 ? "lg" : "sm"} />

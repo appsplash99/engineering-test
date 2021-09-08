@@ -16,19 +16,7 @@ export const RollStateSwitcher: React.FC<Props> = ({ student, size = 40 }) => {
 
   const rollState = updatedStudentRolls.find((stuObj) => stuObj?.id === student?.id)?.type
 
-  /** ORIGINAL FUNCTION */
-  // const nextState = () => {
-  //   const states: RolllStateType[] = ["present", "late", "absent"]
-  //   if (rollState === "unmark" || rollState === "absent") return states[0]
-  //   const matchingIndex = states.findIndex((s) => s === rollState)
-  //   return matchingIndex > -1 ? states[matchingIndex + 1] : states[0]
-  // }
-
   const nextState = () => {
-    /** TODO: BELOW LINE IS TO BE USED IN TASK 4 */
-    // console.log({ stdId: student.id })
-    //////////////////////////
-
     const states: RolllStateType[] = ["present", "late", "absent"]
 
     if (rollState === "unmark" || rollState === "absent") {
