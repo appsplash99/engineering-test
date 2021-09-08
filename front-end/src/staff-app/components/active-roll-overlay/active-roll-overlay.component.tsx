@@ -4,10 +4,19 @@ import Button from "@material-ui/core/Button"
 import { BorderRadius, Spacing } from "shared/styles/styles"
 import { RollStateList } from "staff-app/components"
 import { useStaffAppState } from "staff-app/context/staffAppContext"
+import { transformArrayToRollInputObj } from "staff-app/utils"
+import { useNavigate } from "react-router-dom"
 
-export const ActiveRollOverlay: React.FC = () => {
+interface Props {
+  saveRollinLocalStorage: (params?: object | undefined) => Promise<void>
+  setShowAlert: (params: boolean) => void
+}
+
+export const ActiveRollOverlay: React.FC<Props> = (props) => {
+  let navigate = useNavigate()
+  const { saveRollinLocalStorage, setShowAlert } = props
   const {
-    state: { isRollMode },
+    state: { isRollMode, updatedStudentRolls },
     dispatch,
   } = useStaffAppState()
 
@@ -33,6 +42,9 @@ export const ActiveRollOverlay: React.FC = () => {
               onClick={() => {
                 dispatch({ type: "CHANGE_ROLL_MODE", payload: false })
                 dispatch({ type: "FILTER_STUDENTS_BY_ROLL_TYPE", payload: "all" })
+                saveRollinLocalStorage(transformArrayToRollInputObj(updatedStudentRolls))
+                setShowAlert(true)
+                navigate("/staff/activity")
               }}
             >
               Complete
